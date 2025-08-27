@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="360" height="96" viewBox="0 0 360 96">
-  <rect width="360" height="96" fill="#F6F3E4"/>
-  <!-- O en rectangle arrondi -->
-  <rect x="8" y="16" rx="18" ry="18" width="64" height="64" fill="none" stroke="#ADC1A4" stroke-width="8"/>
-  <!-- Texte "L’ouvreuse" en #3F6442 -->
-  <g fill="#3F6442" font-family="system-ui, -apple-system, Roboto, 'Segoe UI', Arial, 'Noto Sans', sans-serif" font-weight="700" font-size="42">
-    <text x="88" y="60">L’ouvreuse</text>
-  </g>
-</svg>
