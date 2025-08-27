@@ -1,0 +1,84 @@
+---
+import "../styles/global.css";   // on garde
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const { title = "L’Ouvreuse", description = "" } = Astro.props;
+---
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} — L’Ouvreuse</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+  <body>
+    <Header />
+    <main id="content" class="container">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  :root{
+    --brand:#3F6442; /* primaire */
+    --accent:#ADC1A4; /* trait O */
+    --bg:#F6F3E4; /* fond */
+    --text:#1b1b1b;
+  }
+  *{box-sizing:border-box}
+  html{background:var(--bg);color:var(--text)}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial,sans-serif;line-height:1.6}
+  img{max-width:100%;height:auto}
+  a{color:var(--brand);text-decoration:none}
+  a:hover{text-decoration:underline}
+  :focus{outline:3px solid var(--accent);outline-offset:2px}
+
+  header, main, footer{display:block}
+  .container{max-width:1200px;margin:0 auto;padding:1rem}
+
+  /* HEADER : logo centré + nav dessous */
+  header.site-header{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(#F6F3E4, rgba(246,243,228,.94));
+    backdrop-filter:saturate(1.2) blur(6px);
+    border-bottom:1px solid #e6e3d6;
+  }
+  .header-inner{max-width:1200px;margin:0 auto;padding:0.75rem 1rem}
+  .brand{display:flex;justify-content:center}
+  .brand img{height:54px}
+
+  .site-nav{
+    margin-top:.5rem;
+    display:flex; justify-content:center; gap:1rem; flex-wrap:wrap;
+  }
+  .site-nav a{
+    padding:.35rem .7rem;border-radius:999px;text-decoration:none;
+  }
+  .site-nav a:hover, .site-nav a:focus{background:rgba(173,193,164,.25)}
+
+  /* TITRES / textes */
+  h1,h2,h3{line-height:1.25;margin:0.6rem 0 0.3rem}
+  h1{font-size:2rem}
+  h2{font-size:1.4rem}
+  h3{font-size:1.1rem}
+
+  /* LISTES : pas de puces */
+  ul{list-style:none;padding-left:0;margin:0}
+
+  /* “cartes” d’articles lisibles */
+  .articles{display:grid;gap:1rem}
+  .card{
+    background:#fff;border-radius:16px;padding:1rem;
+    border:1px solid #e6e3d6;box-shadow:0 1px 0 rgba(0,0,0,.03);
+  }
+  .article-card{display:grid;gap:.5rem}
+  .article-meta{display:flex;gap:.6rem;align-items:center;font-size:.9rem;color:#555}
+  .badge{padding:.15rem .5rem;border-radius:999px;border:1px solid var(--accent);font-size:.85rem}
+  .article-card img{border-radius:12px;aspect-ratio:16/9;object-fit:cover;width:100%}
+
+  footer{margin-top:3rem;padding:2rem 0;border-top:1px solid #e6e3d6}
+</style>

@@ -1,0 +1,33 @@
+---
+import Base from "../../layouts/Base.astro";
+---
+
+<Base title="Merci — L’Ouvreuse" description="Inscription confirmée">
+  <section class="container" style="max-width:720px">
+    <div class="card">
+      <h1>Merci pour votre inscription 💌</h1>
+      <p>Votre adresse a bien été enregistrée. Vous recevrez bientôt nos prochains envois.</p>
+      <p><a class="btn" href="/articles/">Voir les derniers articles</a></p>
+    </div>
+  </section>
+
+  <style>
+    .card{
+      background:#fff;
+      border:1px solid #e6e3d6;
+      border-radius:16px;
+      padding:1.2rem;
+    }
+    .btn{
+      display:inline-block;
+      margin-top:.6rem;
+      padding:.6rem 1rem;
+      border-radius:999px;
+      background:var(--brand);
+      color:#fff;
+      text-decoration:none;
+      border:2px solid var(--brand);
+      font-weight:700;
+    }
+  </style>
+</Base>

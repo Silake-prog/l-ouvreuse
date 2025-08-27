@@ -1,0 +1,51 @@
+---
+const {
+  src,
+  alt = "",
+  caption = "",
+  credit,
+  creditUrl,
+  aspect = "16/9", // ex: "3/2" | "4/3" | "1/1"
+} = Astro.props;
+---
+
+<figure class="figure" style={`--ratio:${aspect};`}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {(caption || credit) && (
+    <figcaption>
+      {caption}
+      {credit && (
+        <>
+          {caption ? " — " : ""}
+          Crédit&nbsp;: {creditUrl ? <a href={creditUrl} rel="noopener noreferrer">{credit}</a> : credit}
+        </>
+      )}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+.figure{
+  margin:1.25rem 0;
+  border:1px solid #e6e3d6;
+  border-radius:14px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#fff,#f8f6ee);
+  box-shadow:0 1px 0 rgba(0,0,0,.03);
+}
+.figure img{
+  display:block;
+  width:100%;
+  height:auto;
+  aspect-ratio: var(--ratio);
+  object-fit:cover;
+  background:#f3f2ea;
+}
+.figure figcaption{
+  padding:.6rem .8rem;
+  font-size:.925rem;
+  color:#5b5b5b;
+  border-top:1px solid #eeeae0;
+}
+.figure figcaption a{ color:inherit; text-decoration:underline; }
+</style>

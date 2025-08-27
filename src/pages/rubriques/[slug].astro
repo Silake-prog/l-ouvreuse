@@ -1,0 +1,28 @@
+---
+import Base from "../../layouts/Base.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const rubriques = await getCollection("rubriques");
+  return rubriques.map((r) => ({
+    params: { slug: r.slug },
+    props: { rubrique: r },
+  }));
+}
+
+const { rubrique } = Astro.props;
+const allPosts = await getCollection("articles", ({ data }) => data.status === "published");
+const posts = allPosts.filter((p) => p.data.rubrique === rubrique.slug);
+---
+
+<Base title={rubrique.data.title} description={rubrique.data.description ?? ""}>
+  <h1>{rubrique.data.title}</h1>
+  <ul>
+    {posts.map((post) => (
+      <li>
+        <ArticleCard post={post} rubriqueEntry={rubrique} />
+      </li>
+    ))}
+  </ul>
+</Base>

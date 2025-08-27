@@ -1,0 +1,77 @@
+---
+// Génération statique de la page
+export const prerender = true;
+
+import Base from "../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import ArticleCard from "../components/ArticleCard.astro";
+
+// 3 derniers articles publiés
+const posts = (await getCollection("articles", ({ data }) => data.status === "published"))
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date))
+  .slice(0, 3);
+
+// rubriques (pour badges éventuels)
+const rubriques = await getCollection("rubriques");
+const rubriquesBySlug = new Map(rubriques.map((r) => [r.slug, r]));
+---
+
+<Base title="Accueil" description="Journal sportif féminin indépendant">
+  <section class="hero container">
+    <div class="hero-inner">
+      <!-- Titre retiré pour ne pas dupliquer le logo -->
+      <p>Le journal sportif féminin indépendant. Analyses, entretiens et actualités qui mettent la lumière sur les sportives.</p>
+      <div class="hero-actions">
+        <a class="btn" href="/articles/">Lire les articles</a>
+        <a class="btn secondary" href="/newsletter/">S’abonner</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mission">
+    <div class="mission-card card">
+      <h2>Notre mission</h2>
+      <p>Ouvrir la voie, raconter les performances, accompagner la visibilité du sport féminin. L’Ouvreuse met en avant les athlètes et celles et ceux qui œuvrent pour elles.</p>
+    </div>
+  </section>
+
+  <section class="container last-posts">
+    <h2>Derniers articles</h2>
+    <ul class="articles">
+      {posts.map((post) => {
+        const rubrique = rubriquesBySlug.get(post.data.rubrique);
+        return (
+          <li class="card">
+            <ArticleCard post={post} rubriqueEntry={rubrique} />
+          </li>
+        );
+      })}
+    </ul>
+    <p class="more"><a href="/articles/">Voir tous les articles</a></p>
+  </section>
+</Base>
+
+<style>
+.hero { padding: 3rem 0; }
+.hero-inner {
+  text-align:center; padding: 2rem;
+  border-radius: 16px;
+  background: linear-gradient(135deg,#ffffff,#f8f6ee);
+  border:1px solid #e6e3d6;
+}
+.hero p { max-width: 70ch; margin: 0 auto 1rem; }
+.hero-actions { display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
+
+.mission { margin-top: 1.5rem; }
+.mission-card h2 { margin-top:.2rem; }
+
+.last-posts { margin-top:2rem; }
+.articles {
+  list-style:none; margin:0; padding:0;
+  display:grid; gap:1.2rem;
+}
+@media (min-width: 800px) {
+  .articles { grid-template-columns: repeat(3, 1fr); }
+}
+.more { margin-top: 1rem; text-align: center; }
+</style>

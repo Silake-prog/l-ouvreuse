@@ -1,0 +1,21 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection, getEntryBySlug } from 'astro:content';
+
+export async function getStaticPaths(){
+  const auteurs = await getCollection('auteures');
+  return auteurs.map(a => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const posts = (await getCollection('articles', ({data}) => data.status==='published' && data.author === a.slug))
+  .sort((x,y)=> new Date(y.data.date).getTime() - new Date(x.data.date).getTime());
+---
+<Base title={`${a.data.name} — l’Ouvreuse`} description={a.data.bio}>
+  <h1>{a.data.name}</h1>
+  {a.data.photo && <img src={a.data.photo} alt="" />}
+  <p>{a.data.bio}</p>
+  <h2>Articles</h2>
+  <ul class="grid">
+    {posts.map(p => (<li class="card"><a href={`/articles/${p.slug}/`}>{p.data.title}</a></li>))}
+  </ul>
+</Base>

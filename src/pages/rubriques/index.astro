@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+
+const posts = await getCollection("articles", ({ data }) => data.status === "published");
+
+// Charger toutes les rubriques une fois, puis indexer par slug
+const rubriques = await getCollection("rubriques");
+const rubriquesBySlug = new Map(rubriques.map((r) => [r.slug, r]));
+---
+
+<Base title="Articles" description="Tous les articles publiés dans L’Ouvreuse">
+  <h1>Tous les articles</h1>
+  <ul>
+    {posts.map((post) => {
+      const rubriqueEntry = rubriquesBySlug.get(post.data.rubrique);
+      return (
+        <li>
+          <ArticleCard post={post} rubriqueEntry={rubriqueEntry} />
+        </li>
+      );
+    })}
+  </ul>
+</Base>

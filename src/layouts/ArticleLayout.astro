@@ -1,0 +1,122 @@
+---
+import { formatDate } from "../lib/utils";
+
+const { post, rubriqueEntry, auteurEntry } = Astro.props;
+
+// Données de l'article
+const data = post.data ?? {};
+const title        = data.title ?? "";
+const date         = data.date ?? null;
+const image        = data.image ?? null;
+const imageAlt     = data.imageAlt ?? title;
+const imageMode    = data.imageMode ?? "cover"; // "cover" (par défaut) ou "contain"
+const premium      = Boolean(data.premium);
+const rubriqueLabel = rubriqueEntry?.data?.title ?? data.rubrique ?? "";
+
+// Crédit image — tolère plusieurs champs + URL optionnelle
+const rawCredit =
+  (data.imageCredit ??
+   data.credit ??
+   data.credits ??
+   data.photoCredit ??
+   "").toString().trim();
+
+const creditUrl = (data.imageCreditUrl ?? data.creditUrl ?? "").toString().trim();
+
+// Rendu du corps (MD/MDX)
+const { Content } = await post.render();
+---
+
+<article class="article">
+  <header class="article-header">
+    {rubriqueLabel && <span class="badge">{rubriqueLabel}</span>}
+    <h1 class="article-title">{title}</h1>
+
+    <p class="article-meta">
+      {date && <time datetime={new Date(date).toISOString()}>{formatDate(date)}</time>}
+      {auteurEntry && <> · {auteurEntry.data?.title ?? auteurEntry.data?.name}</>}
+      {premium && <span class="premium">Premium</span>}
+    </p>
+
+    {image && (
+      <figure class={`hero-media ${imageMode}`}>
+        <img class={`hero-img ${imageMode}`} src={image} alt={imageAlt} loading="eager" />
+        {rawCredit && (
+          <figcaption class="credit">
+            Crédit :{" "}
+            {creditUrl
+              ? <a href={creditUrl} target="_blank" rel="noopener noreferrer">{rawCredit}</a>
+              : rawCredit}
+          </figcaption>
+        )}
+      </figure>
+    )}
+  </header>
+
+  <div class="article-content prose">
+    <Content />
+  </div>
+</article>
+
+<style>
+.article { display: grid; gap: 1.2rem; }
+
+/* En-tête */
+.article-header { margin-bottom: .5rem; }
+.article-title { margin: .2rem 0 .35rem; }
+.article-meta { color: #666; font-size: .95rem; display: flex; gap: .3rem; align-items: center; flex-wrap: wrap; }
+.badge { padding:.15rem .5rem; border-radius:999px; border:1px solid var(--accent); font-size:.85rem; }
+.premium { margin-left:.4rem; padding:.1rem .4rem; border:1px solid var(--accent); border-radius:999px; font-size:.8rem; }
+
+/* Bloc média d’en-tête (image héros) */
+.hero-media {
+  margin: .35rem 0 0;
+  padding: .75rem;
+  border-radius: 16px;
+  border: 1px dashed #e6e3d6;
+  background: linear-gradient(135deg, #fbfaf4, #f3f0e5);
+}
+.hero-img {
+  display:block;
+  width:100%;
+  border-radius:12px;
+  background: rgba(0,0,0,.03);
+  aspect-ratio: 16 / 9;
+  max-height: 420px;
+  object-fit: cover; /* par défaut: photo recadrée élégante */
+}
+
+/* Mode "contain" (logos/visuels à ne pas recadrer) */
+.hero-media.contain {
+  display:grid;
+  place-items:center;
+  padding: 1.1rem;
+}
+.hero-img.contain {
+  max-height: 220px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: transparent;
+}
+
+/* Crédit image : plus lisible, clique possible */
+.credit {
+  margin-top:.5rem;
+  font-size:.9rem;
+  line-height:1.35;
+  color:#4a5a4c;           /* meilleure lisibilité que #6b6b6b */
+  text-align:center;
+  word-break: break-word;
+}
+.credit a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
+/* Corps de l’article */
+.article-content { margin-top: .4rem; }
+.prose { display:grid; gap:1rem; }
+.prose figure { margin:.5rem 0; }
+.prose figure img { width:100%; border-radius:10px; display:block; }
+.prose figure figcaption { font-size:.9rem; color:#6b6b6b; margin-top:.25rem; text-align:center; }
+</style>

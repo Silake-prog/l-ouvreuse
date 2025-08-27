@@ -1,0 +1,41 @@
+---
+export const prerender = true;
+
+import Base from "../../layouts/Base.astro";
+import ArticleLayout from "../../layouts/ArticleLayout.astro";
+import { getEntry, getCollection } from "astro:content";
+
+// Génère les routes statiques
+export async function getStaticPaths() {
+  const posts = await getCollection("articles", ({ data }) => data.status === "published");
+  return posts.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+
+// Récupération du post
+const post = await getEntry({ collection: "articles", slug });
+if (!post) {
+  throw new Error(`Article not found for slug: ${slug}`);
+}
+
+// Récupération de la rubrique (content via slug, fallback id)
+let rubriqueEntry = undefined;
+if (post.data?.rubrique) {
+  rubriqueEntry =
+    (await getEntry({ collection: "rubriques", slug: post.data.rubrique })) ??
+    (await getEntry({ collection: "rubriques", id: post.data.rubrique }));
+}
+
+// Récupération de l’auteure (d’abord data-ID, fallback slug pour content)
+let auteurEntry = undefined;
+if (post.data?.author) {
+  auteurEntry =
+    (await getEntry({ collection: "auteures", id: post.data.author })) ??
+    (await getEntry({ collection: "auteures", slug: post.data.author }));
+}
+---
+
+<Base title={post.data.title} description={post.data.excerpt}>
+  <ArticleLayout post={post} rubriqueEntry={rubriqueEntry} auteurEntry={auteurEntry} />
+</Base>

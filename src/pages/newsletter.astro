@@ -1,0 +1,28 @@
+---
+import Base from "../layouts/Base.astro";
+import NewsletterForm from "../components/NewsletterForm.astro";
+---
+
+<Base title="Newsletter — L’Ouvreuse" description="Recevez nos articles.">
+  <section class="container" style="max-width:720px">
+    <header class="nl-hero card">
+      <h1>Newsletter</h1>
+      <p>Recevez chaque semaine les derniers articles, interviews et analyses
+        de <strong>L’Ouvreuse</strong> directement dans votre boîte mail.</p>
+    </header>
+
+    <NewsletterForm />
+  </section>
+
+  <style>
+    .card{
+      background:linear-gradient(135deg, #ffffff, #f8f6ee);
+      border:1px solid #e6e3d6;
+      border-radius:16px;
+      padding:1.2rem;
+      margin:1rem 0 1.25rem;
+    }
+    .nl-hero h1{ margin:.2rem 0 .3rem }
+    .nl-hero p{ margin:0; color:#424242 }
+  </style>
+</Base>

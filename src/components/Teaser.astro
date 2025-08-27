@@ -1,0 +1,10 @@
+---
+const { show, ctaHref="/newsletter/" } = Astro.props;
+---
+{show ? (
+  <aside class="card" aria-live="polite">
+    <h3>Rejoignez la communauté</h3>
+    <p>Vous avez atteint la limite d’articles gratuits. Abonnez-vous pour un accès complet.</p>
+    <a class="btn" href={ctaHref}>S’abonner</a>
+  </aside>
+) : (<slot />)}

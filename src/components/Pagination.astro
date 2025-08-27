@@ -1,0 +1,7 @@
+---
+const {page, base='/articles/'} = Astro.props;
+---
+<nav aria-label="Pagination" class="nav">
+  {page?.url?.prev && <a class="btn secondary" href={`${base}${page.url.prev}`}>← Précédent</a>}
+  {page?.url?.next && <a class="btn secondary" href={`${base}${page.url.next}`}>Suivant →</a>}
+</nav>

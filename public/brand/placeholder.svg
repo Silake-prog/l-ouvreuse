@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+  <!-- Fond -->
+  <rect width="1200" height="675" rx="28" fill="#F6F3E4"/>
+  
+  <!-- Cadre en pointillés -->
+  <rect x="60" y="60" width="1080" height="555" rx="24"
+        fill="none" stroke="#E6E3D6" stroke-width="6" stroke-dasharray="12 14"/>
+  
+  <!-- Cercle central -->
+  <circle cx="600" cy="337" r="80" fill="none" stroke="#ADC1A4" stroke-width="10"/>
+  
+  <!-- Icône style "image" -->
+  <path d="M520 360 l50 -50 80 80 40 -40 60 60"
+        fill="none" stroke="#ADC1A4" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

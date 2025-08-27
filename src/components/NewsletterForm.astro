@@ -1,0 +1,86 @@
+---
+const ACTION_URL = "https://formspree.io/f/xkgvgwbb";
+---
+
+<form action={ACTION_URL} method="POST" class="nl-card" novalidate>
+  <div class="nl-fields">
+    <label class="nl-label" for="email">Votre adresse e-mail</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      inputmode="email"
+      autocomplete="email"
+      placeholder="newsletterlouvreuse@gmail.com"
+      required
+      class="nl-input"
+    />
+
+    <!-- (facultatif) Prénom pour personnaliser les envois un jour -->
+    <label class="nl-label" for="name">Prénom (facultatif)</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      autocomplete="given-name"
+      placeholder="Votre prénom"
+      class="nl-input"
+    />
+
+    <!-- Consentement simple -->
+    <label class="nl-consent">
+      <input type="checkbox" name="consent" required />
+      J’accepte de recevoir la newsletter de L’Ouvreuse. Je peux me désabonner à tout moment.
+    </label>
+  </div>
+
+  <!-- Anti-spam honeypot (invisible) -->
+  <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" />
+
+  <!-- Métadonnées Formspree -->
+  <input type="hidden" name="_subject" value="Nouvelle inscription — Newsletter L’Ouvreuse" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_redirect" value="/newsletter/merci" />
+
+  <button type="submit" class="nl-btn">S’abonner</button>
+
+  <p class="nl-note">
+    En cliquant sur « S’abonner », vous acceptez notre politique de confidentialité.
+  </p>
+</form>
+
+<style>
+  .nl-card{
+    background:#fff;
+    border:1px solid #e6e3d6;
+    border-radius:16px;
+    padding:1.25rem;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+  }
+  .nl-fields{ display:grid; gap:.75rem; }
+  .nl-label{ font-weight:600; }
+  .nl-input{
+    padding:.85rem 1rem;
+    border:1px solid #d9d5c6;
+    border-radius:10px;
+    font-size:1rem;
+    background:#fff;
+  }
+  .nl-input:focus{ outline:3px solid var(--accent); outline-offset:2px; }
+  .nl-consent{ display:flex; gap:.5rem; align-items:flex-start; font-size:.95rem; }
+  .nl-consent input{ margin-top:.2rem; }
+  .nl-btn{
+    margin-top:.8rem;
+    display:inline-block;
+    padding:.75rem 1.1rem;
+    border-radius:999px;
+    background:var(--brand);
+    color:#fff;
+    border:2px solid var(--brand);
+    font-weight:700;
+    cursor:pointer;
+  }
+  .nl-btn:hover{ filter:brightness(.95); }
+  .nl-note{ margin:.6rem 0 0; font-size:.9rem; color:#565656; }
+  .hp{ position:absolute; left:-9999px; width:1px; height:1px; }
+</style>

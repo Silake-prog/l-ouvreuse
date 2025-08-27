@@ -1,0 +1,17 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from 'astro:content';
+const auteurs = await getCollection('auteures');
+---
+<Base title="Auteures — l’Ouvreuse" description="L’équipe éditoriale.">
+  <h1>Auteures</h1>
+  <ul class="grid">
+    {auteurs.map(a => (
+      <li class="card">
+        {a.data.photo && <img src={a.data.photo} alt="" />}
+        <h3><a href={`/auteures/${a.slug}/`}>{a.data.name}</a></h3>
+        <p>{a.data.bio}</p>
+      </li>
+    ))}
+  </ul>
+</Base>

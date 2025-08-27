@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="500" viewBox="0 0 1600 500">
+  <rect width="100%" height="100%" fill="#F6F3E4"/>
+  <!-- Left "L’" -->
+  <text x="90" y="340" font-size="260" font-family="Inter, Poppins, Montserrat, Arial, sans-serif" fill="#3F6442" letter-spacing="2">L’</text>
+  <!-- Stylized O as a rounded rectangle -->
+  <rect x="300" y="150" width="300" height="200" rx="100" ry="100" fill="none" stroke="#ADC1A4" stroke-width="32"/>
+  <!-- Right "uvreuse" -->
+  <text x="640" y="340" font-size="260" font-family="Inter, Poppins, Montserrat, Arial, sans-serif" fill="#3F6442" letter-spacing="2">uvreuse</text>
+</svg>

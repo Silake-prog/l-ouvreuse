@@ -1,0 +1,52 @@
+---
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+
+// Articles publiés, triés du plus récent au plus ancien
+const posts = (await getCollection("articles", ({ data }) => data.status === "published"))
+  .sort((a, b) => +new Date(b.data.date) - +new Date(a.data.date));
+
+// Charger toutes les rubriques une fois, puis indexer par slug
+const rubriques = await getCollection("rubriques");
+const rubriquesBySlug = new Map(rubriques.map((r) => [r.slug, r]));
+---
+
+<Base title="Articles" description="Tous les articles publiés dans L’Ouvreuse">
+  <h1>Tous les articles</h1>
+
+  <ul class="articles">
+    {posts.map((post) => {
+      const rubriqueEntry = rubriquesBySlug.get(post.data.rubrique);
+      return (
+        <li class="card">
+          <ArticleCard post={post} rubriqueEntry={rubriqueEntry} />
+        </li>
+      );
+    })}
+  </ul>
+</Base>
+
+<style>
+  .articles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1.5rem;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid #e6e3d6;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  }
+</style>

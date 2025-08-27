@@ -1,0 +1,94 @@
+/* ---- Header : logo centré + menu centré sous le logo ---- */
+.site-header{
+  text-align:center;
+  padding:1.25rem 0 .5rem;
+}
+
+/* bloc/logo (img placé dans <a>) */
+.site-header .logo img{
+  max-width: 260px;   /* ajuste si tu veux plus grand/petit */
+  height:auto;
+  display:block;
+  margin:0 auto;
+}
+
+/* La barre de navigation sous le logo */
+.main-nav ul,
+.nav{                        /* si tu utilises déjà .nav sur le <ul> */
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:1rem;
+  list-style:none;           /* enlève le • vu à l’écran */
+  padding:0;
+  margin:1rem 0 0;
+}
+
+/* Liens du menu */
+.main-nav a,
+.nav a{
+  padding:.45rem .75rem;
+  border-radius:10px;
+  text-decoration:none;
+  color:var(--brand);
+  font-weight:500;
+}
+.main-nav a:hover,
+.main-nav a:focus,
+.nav a:hover,
+.nav a:focus{
+  background:rgba(173,193,164,.25);
+}
+
+/* Optionnel : logo un peu plus grand sur grand écran */
+@media (min-width: 900px){
+  .site-header .logo img{ max-width: 300px; }
+}
+
+/* Layout de la zone logo + nav */
+.header-top {
+  display:flex; flex-direction:column; align-items:center; gap:.6rem;
+  padding:1rem 0 1.2rem;
+}
+.navbar {
+  display:flex; gap:1rem; flex-wrap:wrap; justify-content:center;
+}
+.navbar a { text-decoration:none; color:inherit; padding:.3rem .6rem; border-radius:8px; }
+.navbar a:hover { background: rgba(173,193,164,.25); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+
+/* Listes d’articles sans puces */
+ul.articles, .articles ul { list-style: none; margin: 0; padding: 0; }
+
+/* Petits ajustements typographiques */
+h1, h2, h3 { line-height: 1.2; }
+
+/* listes d’articles sans puces ni marges */
+.articles,
+.articles li { list-style: none; margin: 0; padding: 0; }
+
+/* garde-fou générique pour les images “vides” (si jamais un <img src=""> traîne) */
+img:not([src]), img[src=""] { display: none; }
+
+.article-card figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.article-card img {
+  border-radius: 12px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  width: 100%;
+}
+
+.article-card .credit {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 0.25rem;
+  text-align: right;
+  font-style: italic;
+}
